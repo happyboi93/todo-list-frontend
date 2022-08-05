@@ -5,6 +5,14 @@
 /src-1
 /.pnp
 .pnp.js
+/node_modules
+/config/config.env
+/config.env
+*.env
+*.editorconfig
+*pnp.cjs
+*.yarnrc.yml
+*.yarn
 
 # testing
 /coverage
