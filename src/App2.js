@@ -8,6 +8,17 @@ import {useState} from 'react';
 // import Contact from './components/Contact';
 //var [ name , setName ] = useState()
 function App() {
+  const [initialState, setInitialState] = useState([])
+
+  useEffect(()=>{
+    fetch('/api/item').then(res =>{
+      if(res.ok){
+        return res.json()
+      }
+    }).then(jsonResponse => console.log(jsonResponse))
+  },[])
+
+  console.log(initialState);
   var [itemText, setItemText] = useState()
   // add items to todo-list function
   const addItem = async(e) => {
