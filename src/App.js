@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './App.css';
-// import {useEffect, useState} from 'react';
 
 const App = () => {
   // const [initialState, setInitialState] = useState([])
   const [itemText, setItemText] = useState('')
   const [listItems, setListItems] = useState([]);
   const [isUpdating, setIsUpdating] = useState('')
+  const [updateItemText, setUpdateItemText] = useState('')
 
 // fetch all todo-item
   useEffect(()=>{
@@ -35,10 +35,26 @@ const App = () => {
     }
   }
   // update item to database
+  const updateItem = async (e)=>{
+    e.preventDefault()
+    try {
+      const res = await axios.put(`/api/item/${isUpdating}`, {item: updateItemText})
+      console.log(res.data);
+      const updatedItemIndex = listItems.findIndex(item => item._id === isUpdating);
+      const updatedItem = listItems[updatedItemIndex].item = updateItemText;
+      setUpdateItemText('');
+      setIsUpdating('')
+    } catch (error) {
+      console.log(error);
+    }
+  } 
   // before update
   const renderUpdateForm =()=>(
-    <form className='update-form'>
-      <input type='text' placeholder='New Item'/>
+    <form className='update-form' onSubmit={e=>{updateItem(e)}}>
+      <input className='update-form-input' 
+              type='text' placeholder='New Item'
+              onChange={e=>{setUpdateItemText(e.target.value)}} 
+              value={updateItemText} />
       <button className='update-new-btn' 
               type='submit'>Update</button>
     </form>
